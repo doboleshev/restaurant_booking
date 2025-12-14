@@ -2,3 +2,7 @@
 asgiref==3.8.1
 sqlparse==0.5.3
 crispy-bootstrap5==2024.10
+# Development dependencies
+pytest==7.4.0
+pytest-django==4.7.0
+python-dotenv==1.0.0
