@@ -1,7 +1,7 @@
 from django.shortcuts import render , redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from datetime import datetime
+from datetime import datetime, timedelta
 from .models import Booking, Table
 
 
@@ -30,16 +30,24 @@ def booking_create(request):
         # Валидация данных
         if not all([ date , time , guests ]):
             messages.error(request , 'Пожалуйста, заполните все обязательные поля')
+            today = datetime.now().date()
+            max_date = today + timedelta(days=90)
             return render(request , 'bookings/booking_create.html' ,
-                          {'today': datetime.now().date().isoformat()})
+                          {'today': today.isoformat(), 'max_date': max_date.isoformat()})
 
         try:
-            # Проверяем, что дата в будущем
+            # Проверяем, что дата в будущем и не превышает 90 дней
             booking_date = datetime.strptime(date , '%Y-%m-%d').date()
-            if booking_date < datetime.now().date():
+            today = datetime.now().date()
+            max_date = today + timedelta(days=90)
+            if booking_date < today:
                 messages.error(request , 'Дата бронирования не может быть в прошлом')
                 return render(request , 'bookings/booking_create.html' ,
-                              {'today': datetime.now().date().isoformat()})
+                              {'today': today.isoformat(), 'max_date': max_date.isoformat()})
+            if booking_date > max_date:
+                messages.error(request , f'Бронирование доступно максимум на 90 дней вперед (до {max_date.strftime("%d.%m.%Y")})')
+                return render(request , 'bookings/booking_create.html' ,
+                              {'today': today.isoformat(), 'max_date': max_date.isoformat()})
             
             # Парсим время
             booking_time = datetime.strptime(time , '%H:%M').time()
@@ -48,15 +56,19 @@ def booking_create(request):
             guests_count = int(guests)
             if guests_count < 1 or guests_count > 20:
                 messages.error(request , 'Количество гостей должно быть от 1 до 20')
+                today = datetime.now().date()
+                max_date = today + timedelta(days=90)
                 return render(request , 'bookings/booking_create.html' ,
-                              {'today': datetime.now().date().isoformat()})
+                              {'today': today.isoformat(), 'max_date': max_date.isoformat()})
             
             # Валидация продолжительности
             duration_hours = int(duration) if duration else 2
             if duration_hours < 1 or duration_hours > 6:
                 messages.error(request , 'Продолжительность должна быть от 1 до 6 часов')
+                today = datetime.now().date()
+                max_date = today + timedelta(days=90)
                 return render(request , 'bookings/booking_create.html' ,
-                              {'today': datetime.now().date().isoformat()})
+                              {'today': today.isoformat(), 'max_date': max_date.isoformat()})
             
             # Находим или создаем подходящий столик
             # Сначала пытаемся найти столик по типу и вместимости
@@ -77,8 +89,10 @@ def booking_create(request):
             # В реальном приложении здесь должна быть логика создания столика или сообщение об ошибке
             if not table:
                 messages.error(request , 'К сожалению, нет доступных столиков на выбранную дату и время')
+                today = datetime.now().date()
+                max_date = today + timedelta(days=90)
                 return render(request , 'bookings/booking_create.html' ,
-                              {'today': datetime.now().date().isoformat()})
+                              {'today': today.isoformat(), 'max_date': max_date.isoformat()})
             
             # Создаем бронирование
             booking = Booking.objects.create(
@@ -97,13 +111,19 @@ def booking_create(request):
             
         except ValueError as e:
             messages.error(request , f'Некорректный формат данных: {str(e)}')
+            today = datetime.now().date()
+            max_date = today + timedelta(days=90)
             return render(request , 'bookings/booking_create.html' ,
-                          {'today': datetime.now().date().isoformat()})
+                          {'today': today.isoformat(), 'max_date': max_date.isoformat()})
         except Exception as e:
             messages.error(request , f'Произошла ошибка при создании бронирования: {str(e)}')
+            today = datetime.now().date()
+            max_date = today + timedelta(days=90)
             return render(request , 'bookings/booking_create.html' ,
-                          {'today': datetime.now().date().isoformat()})
+                          {'today': today.isoformat(), 'max_date': max_date.isoformat()})
 
     # GET запрос - показываем форму
+    today = datetime.now().date()
+    max_date = today + timedelta(days=90)
     return render(request , 'bookings/booking_create.html' ,
-                  {'today': datetime.now().date().isoformat()})
+                  {'today': today.isoformat(), 'max_date': max_date.isoformat()})

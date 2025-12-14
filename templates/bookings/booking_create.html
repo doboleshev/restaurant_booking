@@ -39,8 +39,9 @@
                             <div class="col-md-6 mb-4">
                                 <label class="form-label fw-bold">Дата посещения <span class="text-danger">*</span></label>
                                 <input type="date" name="date" class="form-control form-control-lg" required
-                                       min="{{ today }}" id="bookingDate">
-                                <div class="form-text">Бронирование доступно на 90 дней вперед</div>
+                                       min="{{ today }}" id="bookingDate" 
+                                       {% if max_date %}max="{{ max_date }}"{% endif %}>
+                                <div class="form-text">Бронирование доступно на 90 дней вперед{% if max_date %} (до {{ max_date }}){% endif %}</div>
                             </div>
 
                             <div class="col-md-6 mb-4">
@@ -209,14 +210,45 @@
 </style>
 
 <script>
-// Установка минимальной даты (сегодня)
-const today = new Date().toISOString().split('T')[0];
-document.getElementById('bookingDate').min = today;
-
-// Максимальная дата (90 дней вперед)
-const maxDate = new Date();
-maxDate.setDate(maxDate.getDate() + 90);
-document.getElementById('bookingDate').max = maxDate.toISOString().split('T')[0];
+// Установка минимальной и максимальной даты
+(function() {
+    function setDateLimits() {
+        const bookingDateInput = document.getElementById('bookingDate');
+        if (!bookingDateInput) {
+            // Если элемент еще не загружен, попробуем через небольшую задержку
+            setTimeout(setDateLimits, 100);
+            return;
+        }
+        
+        // Минимальная дата (сегодня)
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const todayStr = today.toISOString().split('T')[0];
+        bookingDateInput.setAttribute('min', todayStr);
+        bookingDateInput.min = todayStr;
+        
+        // Максимальная дата (90 дней вперед)
+        const maxDate = new Date();
+        maxDate.setDate(maxDate.getDate() + 90);
+        const maxDateStr = maxDate.toISOString().split('T')[0];
+        
+        // Принудительно устанавливаем максимальную дату
+        bookingDateInput.setAttribute('max', maxDateStr);
+        bookingDateInput.max = maxDateStr;
+        
+        // Дополнительная проверка
+        if (bookingDateInput.getAttribute('max') !== maxDateStr) {
+            bookingDateInput.setAttribute('max', maxDateStr);
+        }
+    }
+    
+    // Запускаем при загрузке DOM
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setDateLimits);
+    } else {
+        setDateLimits();
+    }
+})();
 
 // Выбор типа столика
 document.querySelectorAll('.table-type-card').forEach(card => {
