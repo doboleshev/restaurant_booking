@@ -1,0 +1,123 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Регистрация - Ресторан "Мезонин"{% endblock %}
+
+{% block content %}
+<section class="hero-section" style="height: 300px; background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1559314809-2b99056a8c4a');">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-5 fw-bold text-white">Регистрация</h1>
+                <p class="lead text-white">Станьте частью нашего сообщества</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-success text-white py-4">
+                    <h3 class="mb-0 text-center"><i class="bi bi-person-plus me-2"></i>Создание аккаунта</h3>
+                </div>
+                <div class="card-body p-5">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Имя пользователя <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    <input type="text" name="username" class="form-control form-control-lg" required>
+                                </div>
+                                <div class="form-text">Только латинские буквы, цифры и символы @/./+/-/_</div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Email <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" name="email" class="form-control form-control-lg" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Пароль <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input type="password" name="password1" class="form-control form-control-lg" required>
+                                </div>
+                                <div class="form-text">Минимум 8 символов, должны быть буквы и цифры</div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Подтверждение пароля <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                    <input type="password" name="password2" class="form-control form-control-lg" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Полное имя</label>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" name="first_name" class="form-control" placeholder="Имя">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" name="last_name" class="form-control" placeholder="Фамилия">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Телефон</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                                <input type="tel" name="phone" class="form-control" placeholder="+7 (999) 123-45-67">
+                            </div>
+                            <div class="form-text">Для уведомлений о бронировании</div>
+                        </div>
+
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="terms" required>
+                            <label class="form-check-label" for="terms">
+                                Я соглашаюсь с <a href="#" class="text-primary">условиями использования</a> и <a href="#" class="text-primary">политикой конфиденциальности</a>
+                            </label>
+                        </div>
+
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="newsletter" checked>
+                            <label class="form-check-label" for="newsletter">
+                                Подписаться на новости и специальные предложения
+                            </label>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <h6><i class="bi bi-gift me-2"></i>Преимущества регистрации</h6>
+                            <ul class="mb-0">
+                                <li>Быстрое бронирование в один клик</li>
+                                <li>История всех посещений</li>
+                                <li>Специальные предложения для постоянных гостей</li>
+                                <li>Приветственный бокал вина при первом посещении</li>
+                            </ul>
+                        </div>
+
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-end mt-4">
+                            <button type="submit" class="btn btn-success btn-lg px-5">
+                                <i class="bi bi-check-circle"></i> Зарегистрироваться
+                            </button>
+                            <a href="/login/" class="btn btn-outline-secondary btn-lg">Уже есть аккаунт?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+﻿Django==6.0
+asgiref==3.8.1
+sqlparse==0.5.3
+crispy-bootstrap5==2024.10

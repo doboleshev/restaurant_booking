@@ -1,0 +1,276 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Бронирование столика - Ресторан "Мезонин"{% endblock %}
+
+{% block content %}
+<section class="hero-section" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4'); height: 300px;">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-5 fw-bold text-white">Бронирование столика</h1>
+                <p class="lead text-white">Забронируйте свой идеальный вечер в "Мезонине"</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white py-4">
+                    <h3 class="mb-0 text-center"><i class="bi bi-calendar-plus me-2"></i>Форма бронирования</h3>
+                </div>
+                <div class="card-body p-5">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                        <i class="bi bi-{% if message.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <form method="post" id="bookingForm">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Дата посещения <span class="text-danger">*</span></label>
+                                <input type="date" name="date" class="form-control form-control-lg" required
+                                       min="{{ today }}" id="bookingDate">
+                                <div class="form-text">Бронирование доступно на 90 дней вперед</div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Время <span class="text-danger">*</span></label>
+                                <select name="time" class="form-select form-select-lg" required id="bookingTime">
+                                    <option value="">Выберите время</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Количество гостей <span class="text-danger">*</span></label>
+                                <select name="guests" class="form-select form-select-lg" required id="guestsCount">
+                                    <option value="1">1 гость</option>
+                                    <option value="2" selected>2 гостя</option>
+                                    <option value="3">3 гостя</option>
+                                    <option value="4">4 гостя</option>
+                                    <option value="5">5 гостей</option>
+                                    <option value="6">6 гостей</option>
+                                    <option value="7">7 гостей</option>
+                                    <option value="8">8 гостей</option>
+                                    <option value="9">9 гостей</option>
+                                    <option value="10">10 гостей</option>
+                                    <option value="11">11 гостей</option>
+                                    <option value="12">12 гостей</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Продолжительность</label>
+                                <select name="duration" class="form-select form-select-lg">
+                                    <option value="1">1 час</option>
+                                    <option value="2" selected>2 часа</option>
+                                    <option value="3">3 часа</option>
+                                    <option value="4">4 часа</option>
+                                </select>
+                                <div class="form-text">Среднее время посещения - 2 часа</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Особые пожелания</label>
+                            <textarea name="special_requests" class="form-control" rows="4"
+                                      placeholder="Укажите аллергии, особые диеты, повод для посещения, требования к расположению столика..."></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Тип столика (рекомендуется)</label>
+                            <div class="row" id="tableTypes">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card table-type-card" data-type="standard">
+                                        <div class="card-body text-center">
+                                            <i class="bi bi-person-circle fs-1 text-primary"></i>
+                                            <h6>Стандарт</h6>
+                                            <small>Для любых случаев</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card table-type-card active" data-type="vip">
+                                        <div class="card-body text-center">
+                                            <i class="bi bi-star fs-1 text-warning"></i>
+                                            <h6>VIP</h6>
+                                            <small>Особые события</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card table-type-card" data-type="family">
+                                        <div class="card-body text-center">
+                                            <i class="bi bi-people fs-1 text-success"></i>
+                                            <h6>Семейный</h6>
+                                            <small>Для больших компаний</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="table_type" id="selectedTableType" value="vip">
+                        </div>
+
+                        <div class="alert alert-info">
+                            <h6><i class="bi bi-info-circle me-2"></i>Информация о бронировании</h6>
+                            <ul class="mb-0">
+                                <li>Бронирование бесплатное и подтверждается в течение 1 часа</li>
+                                <li>Отмена возможна за 2 часа до визита</li>
+                                <li>При опоздании более чем на 15 минут бронь аннулируется</li>
+                                <li>В день рождения — бокал шампанского в подарок</li>
+                            </ul>
+                        </div>
+
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-end mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="bi bi-check-circle"></i> Подтвердить бронирование
+                            </button>
+                            <a href="/" class="btn btn-outline-secondary btn-lg">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Календарь доступности -->
+            <div class="card mt-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="bi bi-calendar-check me-2"></i>Календарь доступности</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col">
+                            <div class="p-3 bg-success text-white rounded">
+                                <small>Свободно</small>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="p-3 bg-warning text-dark rounded">
+                                <small>Мало мест</small>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="p-3 bg-danger text-white rounded">
+                                <small>Занято</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <p class="text-center mb-0">Сегодня доступно 12 столиков на вечернее время</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.table-type-card {
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.table-type-card:hover {
+    transform: translateY(-5px);
+    border-color: #8B4513;
+}
+
+.table-type-card.active {
+    border-color: #8B4513;
+    background-color: rgba(139, 69, 19, 0.1);
+}
+
+.form-control-lg, .form-select-lg {
+    padding: 12px 16px;
+    font-size: 1.1rem;
+}
+</style>
+
+<script>
+// Установка минимальной даты (сегодня)
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('bookingDate').min = today;
+
+// Максимальная дата (90 дней вперед)
+const maxDate = new Date();
+maxDate.setDate(maxDate.getDate() + 90);
+document.getElementById('bookingDate').max = maxDate.toISOString().split('T')[0];
+
+// Выбор типа столика
+document.querySelectorAll('.table-type-card').forEach(card => {
+    card.addEventListener('click', function() {
+        document.querySelectorAll('.table-type-card').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('selectedTableType').value = this.dataset.type;
+    });
+});
+
+// Динамическое изменение доступного времени
+document.getElementById('bookingDate').addEventListener('change', function() {
+    const date = new Date(this.value);
+    const day = date.getDay();
+    const timeSelect = document.getElementById('bookingTime');
+
+    // Очищаем опции
+    timeSelect.innerHTML = '<option value="">Выберите время</option>';
+
+    // Разные времена для разных дней
+    let times = [];
+    if (day === 0 || day === 6) { // Выходные
+        times = ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00'];
+    } else { // Будни
+        times = ['13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
+    }
+
+    times.forEach(time => {
+        const option = document.createElement('option');
+        option.value = time;
+        option.textContent = time;
+        timeSelect.appendChild(option);
+    });
+});
+
+// Рекомендация по количеству столиков
+document.getElementById('guestsCount').addEventListener('change', function() {
+    const guests = parseInt(this.value);
+    const tableTypes = document.querySelectorAll('.table-type-card');
+
+    // Снимаем активный класс
+    tableTypes.forEach(card => card.classList.remove('active'));
+
+    // Рекомендуем тип столика в зависимости от количества гостей
+    if (guests <= 2) {
+        tableTypes[0].classList.add('active');
+        document.getElementById('selectedTableType').value = 'standard';
+    } else if (guests <= 4) {
+        tableTypes[1].classList.add('active');
+        document.getElementById('selectedTableType').value = 'vip';
+    } else {
+        tableTypes[2].classList.add('active');
+        document.getElementById('selectedTableType').value = 'family';
+    }
+});
+</script>
+{% endblock %}
