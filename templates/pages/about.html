@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block title %}О нас - Ресторан "Мезонин"{% endblock %}
+
+{% block content %}
+<!-- Заголовок -->
+<section class="hero-section" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1559925393-8be0ec4767c8');">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="display-4 fw-bold mb-4">О ресторане "Мезонин"</h1>
+                <p class="lead">Более 10 лет создаем незабываемые гастрономические впечатления</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- История -->
+<section class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5" class="img-fluid rounded-4 shadow" alt="Интерьер ресторана">
+        </div>
+        <div class="col-lg-6">
+            <h2 class="mb-4">Наша история</h2>
+            <p class="lead mb-4">"Мезонин" открыл свои двери в 2014 году, и с тех пор мы стали синонимом изысканной кухни и безупречного сервиса в Москве.</p>
+            <p>Основатель ресторана, шеф-повар Александр Волков, начал свой путь в Париже, где обучался у лучших мастеров французской кухни. Вернувшись в Россию, он задумал создать место, где традиции европейской гастрономии встречаются с русским гостеприимством.</p>
+            <p>Название "Мезонин" символизирует наше стремление к высочайшему качеству во всем — от отбора ингредиентов до сервировки стола.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Философия -->
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="section-title">Наша философия</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+                            <i class="bi bi-seedling fs-3"></i>
+                        </div>
+                        <h4>Сезонность и локальность</h4>
+                        <p>Мы работаем только со свежими, сезонными продуктами от проверенных локальных поставщиков.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+                            <i class="bi bi-hand-thumbs-up fs-3"></i>
+                        </div>
+                        <h4>Традиции и инновации</h4>
+                        <p>Сохраняя классические рецепты, мы постоянно экспериментируем, создавая новые вкусы.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+                            <i class="bi bi-heart fs-3"></i>
+                        </div>
+                        <h4>Гостеприимство</h4>
+                        <p>Каждый гость для нас — желанный, и мы делаем всё, чтобы его визит стал особенным.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Команда -->
+<section class="container py-5">
+    <h2 class="section-title">Наша команда</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="mb-4">
+                        <div class="rounded-circle overflow-hidden mx-auto" style="width: 150px; height: 150px;">
+                            <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="Шеф-повар">
+                        </div>
+                    </div>
+                    <h4 class="card-title">Александр Волков</h4>
+                    <p class="text-muted">Шеф-повар, основатель</p>
+                    <p class="card-text">Опыт работы 20 лет. Обучался во Франции, работал в ресторанах Мишлен.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="mb-4">
+                        <div class="rounded-circle overflow-hidden mx-auto" style="width: 150px; height: 150px;">
+                            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="Сомелье">
+                        </div>
+                    </div>
+                    <h4 class="card-title">Мария Соколова</h4>
+                    <p class="text-muted">Главный сомелье</p>
+                    <p class="card-text">Сертифицированный эксперт по винам. Победитель российского конкурса сомелье.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="mb-4">
+                        <div class="rounded-circle overflow-hidden mx-auto" style="width: 150px; height: 150px;">
+                            <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="Управляющий">
+                        </div>
+                    </div>
+                    <h4 class="card-title">Дмитрий Иванов</h4>
+                    <p class="text-muted">Управляющий директор</p>
+                    <p class="card-text">Опыт в ресторанном бизнесе 15 лет. Мастер создания безупречного сервиса.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Награды -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Наши достижения</h2>
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <i class="bi bi-trophy display-4 mb-3"></i>
+                <h3>Лучший ресторан 2023</h3>
+                <p>Премия "Гастрономия Москвы"</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <i class="bi bi-award display-4 mb-3"></i>
+                <h3>4 звезды</h3>
+                <p>Рейтинг Forbes</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <i class="bi bi-star display-4 mb-3"></i>
+                <h3>Выбор гостей</h3>
+                <p>Рейтинг 4.9/5 на Tripadvisor</p>
+            </div>
+            <div class="col-md-3 mb-4">
+                <i class="bi bi-heart display-4 mb-3"></i>
+                <h3>Экологичность</h3>
+                <p>Сертификат Green Restaurant</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Призыв к действию -->
+<section class="container py-5">
+    <div class="text-center">
+        <h2 class="mb-4">Хотите стать частью нашей истории?</h2>
+        <p class="lead mb-4">Забронируйте столик и убедитесь в качестве нашего сервиса лично</p>
+        <a href="/bookings/create/" class="btn btn-primary btn-lg">
+            <i class="bi bi-calendar-check"></i> Забронировать сейчас
+        </a>
+    </div>
+</section>
+<div class="text-center mt-4">
+    <p class="text-muted">&copy; 2025 Ресторан "Мезонин"</p>
+</div>
+{% endblock %}

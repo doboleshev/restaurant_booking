@@ -1,0 +1,74 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Вход - Ресторан "Мезонин"{% endblock %}
+
+{% block content %}
+<section class="hero-section" style="height: 300px; background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38');">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="display-5 fw-bold text-white">Вход в личный кабинет</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-primary text-white py-4">
+                    <h3 class="mb-0 text-center"><i class="bi bi-box-arrow-in-right me-2"></i>Вход в систему</h3>
+                </div>
+                <div class="card-body p-5">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Имя пользователя</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                <input type="text" name="username" class="form-control form-control-lg" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Пароль</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" name="password" class="form-control form-control-lg" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-box-arrow-in-right"></i> Войти
+                            </button>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <p>Еще нет аккаунта? <a href="/register/" class="text-primary fw-bold">Зарегистрироваться</a></p>
+                            <p><a href="#" class="text-muted">Забыли пароль?</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <p class="text-muted">Или войдите с помощью</p>
+                <button class="btn btn-outline-dark me-2">
+                    <i class="bi bi-google"></i> Google
+                </button>
+                <button class="btn btn-outline-primary">
+                    <i class="bi bi-facebook"></i> Facebook
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
